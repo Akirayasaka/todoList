@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+</head>
+<style>
+        .ok{
+            border: 3px solid green;
+        }
+        
+        .nok{
+            border:3px solid red;
+        }
+        
+</style>
+<body>
+    <fieldset id="work" style="width:50%;margin:0 auto;">
+        <legend>待辦事項清單</legend>
+        <ol>
+            <li v-for="(f,idx) in list">{{f}} &nbsp&nbsp&nbsp&nbsp <input type="button" value="x" @click="del(idx)"></li>
+        </ol>
+        <hr>
+        <p>新增事項</p>
+        <input type="text" name="" id="" v-model="chkV" :class="myclass" @keyup.enter="add">
+        <input type="button" value="Add" @click="add">
+    </fieldset>
+
+
+    <script>
+        new Vue({
+            el:"#work",
+            data(){
+                let chkV="";
+                let list=[];
+                return{
+                    chkV,list
+                }
+            },
+            methods:{
+                add(){
+                    if(this.chkV != "" && this.chkV.length>2){
+                    this.list.push(this.chkV);
+                    this.chkV="";
+                    }
+                },
+                del(idx){
+                    this.list.splice(idx,1);
+                },
+            },
+            computed:{
+            myclass(){
+            let ohok = this.chkV.length >2 ? true : false;
+            let ohno = this.chkV.length <= 2 && this.chkV.length >0 ? true : false;
+                return{
+                    ok:ohok,
+                    nok:ohno
+                }
+              }
+
+            }
+            
+        })
+    
+    </script>
+</body>
+</html>
